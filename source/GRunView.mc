@@ -48,6 +48,7 @@ class GRunView extends WatchUi.DataField
   protected var isPaceUnitsImperial;
   protected var isDistanceUnitsImperial;
   protected var isElevationUnitsImperial;
+  protected var headerMap = {1=>"时间", 2=>"计时", 5=>"距离", 6=>"心率", 7=>"配速", 8=>"速度", 9=>"平均心率", 10=>"平均配速", 12=>"平均速度", 13=>"卡路里", 14=>"步频", 15=>"海拔", 16=>"上升", 17=>"下降", 18=>"电量", 19=>"GPS", 20=>"GPS/电量", 21=>"功率", 22=>"平均功率", 25=>"圈时", 26=>"圈距", 27=>"圈速", 28=>"训练效果", 30=>"上一圈时", 31=>"圈预计", 32=>"圈数", 33=>"平均步频", 34=>"+/-", 35=>"心率区间", 50=>"5K预计", 51=>"10K预计", 52=>"半马预计", 53=>"全马预计", 54=>"50K预计", 55=>"100K预计", 56=>"5K配速", 57=>"10K配速", 58=>"半马配速", 59=>"全马配速", 60=>"50K配速", 61=>"100K配速"};
   
   // Default colors
   protected var primaryForegroundColor = Graphics.COLOR_BLACK;
@@ -104,6 +105,8 @@ class GRunView extends WatchUi.DataField
   // GPS Image to display
   protected var imgGPS = WatchUi.loadResource(Rez.Drawables.GPS0);
   
+
+  hidden var customfont;
   // In order to use less memory, numbers have been hardcoded instead of using enum..
   // This makes code less readable, but is required since memory on Garmin watch is very limited
   //enum {
@@ -154,7 +157,6 @@ class GRunView extends WatchUi.DataField
     OPTION_REQUIRED_PACE_100K = 61
     */
   //}
-  
   
   function getParameter(paramName, defaultValue)
   {
@@ -275,8 +277,9 @@ class GRunView extends WatchUi.DataField
   }
   
   
-  function initializeUserData()
+  function initializeUserData(zhcnFont)
   {
+    customfont = zhcnFont;
     initCompleted = 6;
     fontHeader = Graphics.FONT_LARGE;
   
@@ -369,7 +372,7 @@ class GRunView extends WatchUi.DataField
       vArea[i] = new [4];
     }
     
-    initializeUserData();
+    initializeUserData(null);
   }
   
   
@@ -704,6 +707,8 @@ class GRunView extends WatchUi.DataField
     // Bugfix on Garmin Venue.
     var primaryBackgroundColor = ~primaryForegroundColor & 0xFFFFFF;
     dc.setColor(primaryBackgroundColor, Graphics.COLOR_TRANSPARENT);
+    System.println("deviceWidth:"+deviceWidth);
+    System.println("deviceHeight:"+deviceHeight);
     dc.fillRectangle(0, 0, deviceWidth, deviceHeight);
     
     // Inverse background for row 4 and 5
@@ -1057,50 +1062,8 @@ class GRunView extends WatchUi.DataField
   }
   
   
-  function getHeaderName(type)
-  {
-    if (type == 1 /* OPTION_CURRENT_TIME */) { return WatchUi.loadResource( Rez.Strings.OPTION_CURRENT_TIME ); }
-    if (type == 2 /* OPTION_TIMER_TIME */) { return WatchUi.loadResource( Rez.Strings.OPTION_TIMER_TIME ); }
-    if (type == 5 /* OPTION_ELAPSED_DISTANCE */) { return WatchUi.loadResource( Rez.Strings.OPTION_ELAPSED_DISTANCE ); }
-    if (type == 6 /* OPTION_CURRENT_HEART_RATE */) { return WatchUi.loadResource( Rez.Strings.OPTION_CURRENT_HEART_RATE ); }
-    if (type == 7 /* OPTION_CURRENT_PACE */) { return WatchUi.loadResource( Rez.Strings.OPTION_CURRENT_PACE ); }
-    if (type == 8 /* OPTION_CURRENT_SPEED */) { return WatchUi.loadResource( Rez.Strings.OPTION_CURRENT_SPEED ); }
-    if (type == 9 /* OPTION_AVERAGE_HEART_RATE */) { return WatchUi.loadResource( Rez.Strings.OPTION_AVERAGE_HEART_RATE ); }
-    if (type == 10 /* OPTION_AVERAGE_PACE */) { return WatchUi.loadResource( Rez.Strings.OPTION_AVERAGE_PACE );}
-    if (type == 12 /* OPTION_AVERAGE_SPEED */) { return WatchUi.loadResource( Rez.Strings.OPTION_AVERAGE_SPEED ); }
-    if (type == 13 /* OPTION_CALORIES */) { return WatchUi.loadResource( Rez.Strings.OPTION_CALORIES ); }
-    if (type == 14 /* OPTION_CURRENT_CADENCE */) { return WatchUi.loadResource( Rez.Strings.OPTION_CURRENT_CADENCE ); }
-    if (type == 15 /* OPTION_ALTITUDE */) { return WatchUi.loadResource( Rez.Strings.OPTION_ALTITUDE ); }
-    if (type == 16 /* OPTION_TOTAL_ASCENT */) { return WatchUi.loadResource( Rez.Strings.OPTION_TOTAL_ASCENT ); }
-    if (type == 17 /* OPTION_TOTAL_DESCENT */) { return WatchUi.loadResource( Rez.Strings.OPTION_TOTAL_DESCENT ); }
-    if (type == 18 /* OPTION_CURRENT_BATTERY */) { return WatchUi.loadResource( Rez.Strings.OPTION_CURRENT_BATTERY ); }
-    if (type == 19 /* OPTION_CURRENT_LOCATION_ACCURACY */) { return WatchUi.loadResource( Rez.Strings.OPTION_CURRENT_LOCATION_ACCURACY ); }
-    if (type == 20 /* OPTION_CURRENT_LOCATION_ACCURACY_AND_BATTERY */) { return WatchUi.loadResource( Rez.Strings.OPTION_CURRENT_LOCATION_ACCURACY_AND_BATTERY ); }
-    if (type == 21 /* OPTION_CURRENT_POWER */) { return WatchUi.loadResource( Rez.Strings.OPTION_CURRENT_POWER ); }
-    if (type == 22 /* OPTION_AVERAGE_POWER */) { return WatchUi.loadResource( Rez.Strings.OPTION_AVERAGE_POWER ); }
-    if (type == 25 /* OPTION_CURRENT_LAP_TIME */) { return WatchUi.loadResource( Rez.Strings.OPTION_CURRENT_LAP_TIME ); }
-    if (type == 26 /* OPTION_CURRENT_LAP_DISTANCE */) { return WatchUi.loadResource( Rez.Strings.OPTION_CURRENT_LAP_DISTANCE ); }
-    if (type == 27 /* OPTION_CURRENT_LAP_PACE */) { return WatchUi.loadResource( Rez.Strings.OPTION_CURRENT_LAP_PACE ); }
-    if (type == 28 /* OPTION_TRAINING_EFFECT */) { return WatchUi.loadResource( Rez.Strings.OPTION_TRAINING_EFFECT ); }
-    if (type == 30 /* OPTION_TIMER_TIME_ON_PREVIOUS_LAP */) { return WatchUi.loadResource( Rez.Strings.OPTION_TIMER_TIME_ON_PREVIOUS_LAP ); }
-    if (type == 31 /* OPTION_ETA_LAP */) { return WatchUi.loadResource( Rez.Strings.OPTION_ETA_LAP ); }
-    if (type == 32 /* OPTION_LAP_COUNT */) { return WatchUi.loadResource( Rez.Strings.OPTION_LAP_COUNT ); }
-    if (type == 33 /* OPTION_AVERAGE_CADENCE */) { return WatchUi.loadResource( Rez.Strings.OPTION_AVERAGE_CADENCE ); }
-    if (type == 34 /* OPTION_TIME_OFFSET */) { return WatchUi.loadResource( Rez.Strings.OPTION_TIME_OFFSET ); }
-    if (type == 35 /* OPTION_HR_ZONE */) { return WatchUi.loadResource( Rez.Strings.OPTION_HR_ZONE ); }
-    if (type == 50 /* OPTION_ETA_5K */) { return WatchUi.loadResource( Rez.Strings.OPTION_ETA_5K ); }
-    if (type == 51 /* OPTION_ETA_10K */) { return WatchUi.loadResource( Rez.Strings.OPTION_ETA_10K ); }
-    if (type == 52 /* OPTION_ETA_HALF_MARATHON */) { return WatchUi.loadResource( Rez.Strings.OPTION_ETA_HALF_MARATHON ); }
-    if (type == 53 /* OPTION_ETA_MARATHON */) { return WatchUi.loadResource( Rez.Strings.OPTION_ETA_MARATHON ); }
-    if (type == 54 /* OPTION_ETA_50K */) { return WatchUi.loadResource( Rez.Strings.OPTION_ETA_50K ); }
-    if (type == 55 /* OPTION_ETA_100K */) { return WatchUi.loadResource( Rez.Strings.OPTION_ETA_100K ); }
-    if (type == 56 /* OPTION_REQUIRED_PACE_5K */) { return WatchUi.loadResource( Rez.Strings.OPTION_REQUIRED_PACE_5K ); }
-    if (type == 57 /* OPTION_REQUIRED_PACE_10K */) { return WatchUi.loadResource( Rez.Strings.OPTION_REQUIRED_PACE_10K ); }
-    if (type == 58 /* OPTION_REQUIRED_PACE_HALF_MARATHON */) { return WatchUi.loadResource( Rez.Strings.OPTION_REQUIRED_PACE_HALF_MARATHON ); }
-    if (type == 59 /* OPTION_REQUIRED_PACE_MARATHON */) { return WatchUi.loadResource( Rez.Strings.OPTION_REQUIRED_PACE_MARATHON );}
-    if (type == 60 /* OPTION_REQUIRED_PACE_50K */) { return WatchUi.loadResource( Rez.Strings.OPTION_REQUIRED_PACE_50K ); }
-    if (type == 61 /* OPTION_REQUIRED_PACE_100K */) { return WatchUi.loadResource( Rez.Strings.OPTION_REQUIRED_PACE_100K ); }    
-    return "";
+  function getHeaderName(type)  {
+    return headerMap[type];
   }
   
   
@@ -1183,8 +1146,8 @@ class GRunView extends WatchUi.DataField
       if (textDimensions[0] <= maxWidth && textDimensions[1] <= maxHeight) { break; }
       font--;
     }
-    
-    return font;
+    System.println("customfont == null?:"+(customfont == null));
+    return customfont == null?font:customfont;
   }
 
   

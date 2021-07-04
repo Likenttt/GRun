@@ -5,11 +5,13 @@ using Toybox.Graphics;
 class GRunApp extends Application.AppBase
 {
   protected var gRunView;
+  hidden var zhcnFont;
   
   function initialize()
   {
     //System.println("Garmin Edge 520 Plus / 820 (High Memory)");
     AppBase.initialize();
+    zhcnFont = WatchUi.loadResource(Rez.Fonts.Zhcn);
     gRunView = new GRunViewHighMem();
   }
   
@@ -40,7 +42,7 @@ class GRunApp extends Application.AppBase
   function onSettingsChanged()
   {
     AppBase.onSettingsChanged();
-    gRunView.initializeUserData();
+    gRunView.initializeUserData(zhcnFont);
   }
   
 

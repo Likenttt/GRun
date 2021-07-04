@@ -5,11 +5,11 @@
   <string id="Field139">Vertical Speed (/min) (Last X sec)</string>
   <string id="Field140">Vertical Speed (/hour) (Last X sec)</string>
 
-  <string id="Field147">Required Speed 5K</string>
-  <string id="Field148">Required Speed 10K</string>
-  <string id="Field149">Required Speed Half Marathon (21.0975 km)</string>
-  <string id="Field150">Required Speed Marathon (42.195 km)</string>
-  <string id="Field151">Required Speed 100K</string>
+  <string id="Field147">5K需要配速</string>
+  <string id="Field148">10K所需配速</string>
+  <string id="Field149">半马需要配速</string>
+  <string id="Field150">全马需要配速</string>
+  <string id="Field151">100K需要配速</string>
 
   <string id="Field152">Required Pace Lap Distance</string>
   <string id="Field153">Required Speed Lap Distance</string>

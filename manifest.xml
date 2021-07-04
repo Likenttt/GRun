@@ -73,6 +73,7 @@
         </iq:permissions>
         <iq:languages>
             <iq:language>zhs</iq:language>
+            <iq:language>eng</iq:language>
         </iq:languages>
         <iq:barrels/>
     </iq:application>

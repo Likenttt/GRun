@@ -71,8 +71,6 @@
   <string id="Field20">GPS图标和电池图标</string>
   <string id="Field21">当前功率</string>
   <string id="Field22">平均功率</string>
-  <string id="Field23">上一圈距离</string>
-  <string id="Field24">上一圈配速</string>
   <string id="Field25">单圈时间</string>
   <string id="Field26">单圈距离</string>
   <string id="Field27">单圈配速</string>

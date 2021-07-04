@@ -41,7 +41,7 @@ class GRunApp extends Application.AppBase
   function onSettingsChanged()
   {
     AppBase.onSettingsChanged();
-    gRunView.initializeUserData();
+    gRunView.initializeUserData(null);
   }
   
 

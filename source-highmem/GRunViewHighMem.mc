@@ -150,11 +150,11 @@ class GRunViewHighMem extends GRunView
     return paramValue;
   }
   
-  function initializeUserData()
+  function initializeUserData(zhcnFont)
   {
     distanceArrayRequired = false;
     altitudeArrayRequired = false;
-    GRunView.initializeUserData();
+    GRunView.initializeUserData(zhcnFont);
     var info = Activity.getActivityInfo();
     
     if (distanceArrayRequired == false)
@@ -651,7 +651,7 @@ class GRunViewHighMem extends GRunView
     //if (type == OPTION_FRONT_DERAILLEUR_SIZE) { return "DERS"; }
     //if (type == OPTION_MAX_CADENCE) { return "MAX CAD"; }
     //if (type == OPTION_MAX_HEART_RATE) { return "MAX HR"; }
-    if (type == OPTION_MAX_POWER) { return "MAX POW"; }
+    if (type == OPTION_MAX_POWER) { return "最大功率"; }
     //if (type == OPTION_MAX_SPEED) { return "MAX SPD"; }
     //if (type == OPTION_MEAN_SEA_LEVEL_PRESSURE) { return "SEA PRES"; }
     //if (type == OPTION_NAME_OF_DESTINATION) { return "DEST"; }
@@ -667,16 +667,16 @@ class GRunViewHighMem extends GRunView
     //if (type == OPTION_SWIM_SWOLF) { return "SWOLF"; }
     //if (type == OPTION_TIMER_STATE) { return "TMR ST"; }
     //if (type == OPTION_TRACK) { return "TRACK"; }
-    if (type == OPTION_AVERAGE_PACE_CUSTOM) { return "PACE(" + arrayDistPrecision + ")"; }
-    if (type == OPTION_AVERAGE_SPEED_CUSTOM) { return "SPD(" + arrayDistPrecision + ")"; }
+    if (type == OPTION_AVERAGE_PACE_CUSTOM) { return "配速(" + arrayDistPrecision + ")"; }
+    if (type == OPTION_AVERAGE_SPEED_CUSTOM) { return "速度(" + arrayDistPrecision + ")"; }
     if ( (type == OPTION_AVERAGE_VERTICAL_SPEED_MIN) || (type == OPTION_AVERAGE_VERTICAL_SPEED_HOUR) ) { return "V SPD(" + arrayAltPrecision + ")"; }
-    if (type == OPTION_REQUIRED_SPEED_5K) { return "SPD 5K"; }
-    if (type == OPTION_REQUIRED_SPEED_10K) { return "SPD 10K"; }
-    if (type == OPTION_REQUIRED_SPEED_HALF_MARATHON) { return "SPD 21K"; }
-    if (type == OPTION_REQUIRED_SPEED_MARATHON) { return "SPD 42K"; }
-    if (type == OPTION_REQUIRED_SPEED_100K) { return "SPD 100K"; }
-    if (type == OPTION_REQUIRED_PACE_LAP) { return "PACE LAP"; }
-    if (type == OPTION_REQUIRED_SPEED_LAP) { return "SPD LAP"; }
+    if (type == OPTION_REQUIRED_SPEED_5K) { return "5K速度"; }
+    if (type == OPTION_REQUIRED_SPEED_10K) { return "10K速度"; }
+    if (type == OPTION_REQUIRED_SPEED_HALF_MARATHON) { return "半马速度"; }
+    if (type == OPTION_REQUIRED_SPEED_MARATHON) { return "全马速度"; }
+    if (type == OPTION_REQUIRED_SPEED_100K) { return "100K速度"; }
+    if (type == OPTION_REQUIRED_PACE_LAP) { return "圈配速"; }
+    if (type == OPTION_REQUIRED_SPEED_LAP) { return "圈速度"; }
     
     return "";
   }
